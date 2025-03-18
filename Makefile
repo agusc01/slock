@@ -1,12 +1,12 @@
-# slock - simple screen locker
+# dslock - simple screen locker
 # See LICENSE file for copyright and license details.
 
 include config.mk
 
-SRC = slock.c ${COMPATSRC}
+SRC = dslock.c ${COMPATSRC}
 OBJ = ${SRC:.c=.o}
 
-all: slock
+all: dslock
 
 .c.o:
 	${CC} -c ${CFLAGS} $<
@@ -16,31 +16,31 @@ ${OBJ}: config.h config.mk arg.h util.h
 config.h:
 	cp config.def.h $@
 
-slock: ${OBJ}
+dslock: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
-	rm -f slock ${OBJ} slock-${VERSION}.tar.gz
+	rm -f dslock ${OBJ} dslock-${VERSION}.tar.gz
 
 dist: clean
-	mkdir -p slock-${VERSION}
-	cp -R LICENSE Makefile README slock.1 config.mk \
-		${SRC} config.def.h arg.h util.h slock-${VERSION}
-	tar -cf slock-${VERSION}.tar slock-${VERSION}
-	gzip slock-${VERSION}.tar
-	rm -rf slock-${VERSION}
+	mkdir -p dslock-${VERSION}
+	cp -R LICENSE Makefile README dslock.1 config.mk \
+		${SRC} config.def.h arg.h util.h dslock-${VERSION}
+	tar -cf dslock-${VERSION}.tar dslock-${VERSION}
+	gzip dslock-${VERSION}.tar
+	rm -rf dslock-${VERSION}
 
 install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
-	cp -f slock ${DESTDIR}${PREFIX}/bin
-	chmod 755 ${DESTDIR}${PREFIX}/bin/slock
-	chmod u+s ${DESTDIR}${PREFIX}/bin/slock
+	cp -f dslock ${DESTDIR}${PREFIX}/bin
+	chmod 755 ${DESTDIR}${PREFIX}/bin/dslock
+	chmod u+s ${DESTDIR}${PREFIX}/bin/dslock
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
-	sed "s/VERSION/${VERSION}/g" <slock.1 >${DESTDIR}${MANPREFIX}/man1/slock.1
-	chmod 644 ${DESTDIR}${MANPREFIX}/man1/slock.1
+	sed "s/VERSION/${VERSION}/g" <dslock.1 >${DESTDIR}${MANPREFIX}/man1/dslock.1
+	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dslock.1
 
 uninstall:
-	rm -f ${DESTDIR}${PREFIX}/bin/slock
-	rm -f ${DESTDIR}${MANPREFIX}/man1/slock.1
+	rm -f ${DESTDIR}${PREFIX}/bin/dslock
+	rm -f ${DESTDIR}${MANPREFIX}/man1/dslock.1
 
 .PHONY: all clean dist install uninstall
